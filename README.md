@@ -1,1 +1,2 @@
-# DRL_Gym_Mario
+# Deep Reinforcement Learning in Super Mario Bros
+
