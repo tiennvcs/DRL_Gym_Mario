@@ -1,0 +1,3 @@
+tensorflow==2.2.0
+gym_super_mario_bros
+opencv-python

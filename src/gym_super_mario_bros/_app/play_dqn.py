@@ -164,7 +164,7 @@ def play_dqn(env, steps):
             "/ EPSILON", epsilon, "/ ACTION", action, "/ REWARD", reward, \
             "/ Q_MAX %e" % np.max(readout_t))
 
-        #env.render()
+        env.render()
 
     env.close()
 
