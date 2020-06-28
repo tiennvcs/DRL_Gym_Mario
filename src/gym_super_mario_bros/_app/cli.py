@@ -70,7 +70,7 @@ def main():
     elif args.mode == 'random':
         play_random(env, args.steps)
     elif args.mode == 'dqn':
-        play_dqn(env, args.steps)
+        play_dqn(env)
 
 # explicitly define the outward facing API of this module
 __all__ = [main.__name__]
