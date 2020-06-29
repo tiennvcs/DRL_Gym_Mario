@@ -1,4 +1,4 @@
-from config import *
+from config import parameters
 import random
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
@@ -21,7 +21,7 @@ def max_pool_2x2(x):                                                            
 ##############################################################################################
 
 
-def createNetwork():
+def createNetwork(parameters_x: dict):
     # network weights
     W_conv1 = weight_variable([8, 8, 4, 32])
     b_conv1 = bias_variable([32])
@@ -35,8 +35,8 @@ def createNetwork():
     W_fc1 = weight_variable([1600, 512])
     b_fc1 = bias_variable([512])
 
-    W_fc2 = weight_variable([512, NUM_ACTIONS])
-    b_fc2 = bias_variable([NUM_ACTIONS])
+    W_fc2 = weight_variable([512, parameters_x['NUM_ACTIONS']])
+    b_fc2 = bias_variable([parameters_x['NUM_ACTIONS']])
 
     # input layer
     s = tf.placeholder("float", [None, 80, 80, 4])

@@ -1,4 +1,5 @@
-"""Methods for playing the game randomly, or as a human."""
+"""The Implementation of Deep Q Learning for Mario Game"""
+
 from __future__ import print_function
 
 from tqdm import tqdm
@@ -14,7 +15,7 @@ import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
 
 
-def play_dqn(env):
+def play_dqn(env, parameters_x):
     """
     Play the environment making uniformly random decisions.
 
@@ -26,11 +27,21 @@ def play_dqn(env):
         None
 
     """
-    env.reset()
+    # Get the hyper-parameters
+    GAME = parameters_x['GAME']
+    NUM_ACTIONS = parameters_x['NUM_ACTIONS']
+    GAMMA = parameters_x['GAMMA']
+    OBSERVE = parameters_x['OBSERVE']
+    EXPLORE = parameters_x['EXPLORE']
+    INITIAL_EPSILON = parameters_x['INITIAL_EPSILON']
+    FINAL_EPSILON = parameters_x['FINAL_EPSILON']
+    REPLAY_MEMORY = parameters_x['REPLAY_MEMORY']
+    BATCH = parameters_x['BATCH']
+    FRAME_PER_ACTION = parameters_x['FRAME_PER_ACTION']
 
     sess = tf.InteractiveSession()
     # Initialize a neural network
-    s, readout, h_fc1 = createNetwork()
+    s, readout, h_fc1 = createNetwork(parameters_x)
 
     # define the cost function
     a = tf.placeholder("float", [None, NUM_ACTIONS])
@@ -41,6 +52,7 @@ def play_dqn(env):
 
     # store the previous observations in replay memory
     D = deque()
+    env.reset()
 
     # Get the first state (Frame) by doing nothing and preprocess the image to 80x80x4
     #############################################################################################
