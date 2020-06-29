@@ -41,3 +41,6 @@ parameters = {
         'FRAME_PER_ACTION': 1
     },
 }
+
+
+STANDARD_SIZE = (240, 256)
