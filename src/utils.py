@@ -1,17 +1,34 @@
-import tensorflow.compat.v1 as tf
-tf.disable_v2_behavior()
+import argparse
 
+def get_args():
+    """Parse command line arguments and return them."""
+    parser = argparse.ArgumentParser(description="Deep Q Lerning in Mario Bros Game")
+    # add the argument for the Super Mario Bros environment to run
+    parser.add_argument('--env', '-e',
+        type=str,
+        default='SuperMarioBros-v0',
+        help='The name of the environment to play'
+    )
 
-def weight_variable(shape):
-    initial = tf.truncated_normal(shape, stddev = 0.01)
-    return tf.Variable(initial)
-
-def bias_variable(shape):
-    initial = tf.constant(0.01, shape = shape)
-    return tf.Variable(initial)
-
-def conv2d(x, W, stride):
-    return tf.nn.conv2d(x, W, strides = [1, stride, stride, 1], padding = "SAME")
-
-def max_pool_2x2(x):
-    return tf.nn.max_pool(x, ksize = [1, 2, 2, 1], strides = [1, 2, 2, 1], padding = "SAME")
+    # add parameter selections
+    parser.add_argument('--parameter', '-p',
+        type=int,
+        default=1,
+        choices=[1, 2, 3, 4, 5],
+        help='The parameter to train agent'
+    )
+    # add the argument for adjusting the action space
+    parser.add_argument('--actionspace', '-a',
+        type=str,
+        default='simple',
+        choices=['nes', 'right', 'simple', 'complex'],
+        help='the action space wrapper to use'
+    )
+    # add the argument for the number of steps to take in random mode
+    parser.add_argument('--steps', '-s',
+        type=int,
+        default=500,
+        help='The number of random steps to take.',
+    )
+    # parse arguments and return them
+    return parser.parse_args()

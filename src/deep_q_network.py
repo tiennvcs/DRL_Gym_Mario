@@ -1,24 +1,24 @@
 from config import *
-from utils import (weight_variable, bias_variable, conv2d, max_pool_2x2)
 import random
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
 
-
-# Some funtions for computation in networks
-def weight_variable(shape):
-    initial = tf.truncated_normal(shape, stddev = 0.01)
-    return tf.Variable(initial)
-
-def bias_variable(shape):
-    initial = tf.constant(0.01, shape = shape)
-    return tf.Variable(initial)
-
-def conv2d(x, W, stride):
-    return tf.nn.conv2d(x, W, strides = [1, stride, stride, 1], padding = "SAME")
-
-def max_pool_2x2(x):
-    return tf.nn.max_pool(x, ksize = [1, 2, 2, 1], strides = [1, 2, 2, 1], padding = "SAME")
+# Some utinity function
+##############################################################################################
+def weight_variable(shape):                                                                  #
+    initial = tf.truncated_normal(shape, stddev = 0.01)                                      #
+    return tf.Variable(initial)                                                              #
+                                                                                             #
+def bias_variable(shape):                                                                    #
+    initial = tf.constant(0.01, shape = shape)                                               #
+    return tf.Variable(initial)                                                              #
+                                                                                             #
+def conv2d(x, W, stride):                                                                    #
+    return tf.nn.conv2d(x, W, strides = [1, stride, stride, 1], padding = "SAME")            #
+                                                                                             #
+def max_pool_2x2(x):                                                                         #
+    return tf.nn.max_pool(x, ksize = [1, 2, 2, 1], strides = [1, 2, 2, 1], padding = "SAME") #
+##############################################################################################
 
 
 def createNetwork():

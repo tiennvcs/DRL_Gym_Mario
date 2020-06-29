@@ -7,29 +7,11 @@ import sys
 import random
 import numpy as np
 from collections import deque
-from .config import *
-from .deep_q_network import createNetwork, trainNetwork
+from config import *
+from deep_q_network import createNetwork
+from actions import ACTION_SPACES
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
-
-
-sess = tf.InteractiveSession()
-# Initialize a neural network
-s, readout, h_fc1 = createNetwork()
-
-# define the cost function
-a = tf.placeholder("float", [None, NUM_ACTIONS])
-y = tf.placeholder("float", [None])
-readout_action = tf.reduce_sum(tf.multiply(readout, a), reduction_indices=1)
-cost = tf.reduce_mean(tf.square(y - readout_action))
-train_step = tf.train.AdamOptimizer(1e-6).minimize(cost)
-
-# store the previous observations in replay memory
-D = deque()
-
-# printing
-a_file = open("logs_" + GAME + "/readout.txt", 'w')
-h_file = open("logs_" + GAME + "/hidden.txt", 'w')
 
 
 def play_dqn(env):
@@ -45,6 +27,20 @@ def play_dqn(env):
 
     """
     env.reset()
+
+    sess = tf.InteractiveSession()
+    # Initialize a neural network
+    s, readout, h_fc1 = createNetwork()
+
+    # define the cost function
+    a = tf.placeholder("float", [None, NUM_ACTIONS])
+    y = tf.placeholder("float", [None])
+    readout_action = tf.reduce_sum(tf.multiply(readout, a), reduction_indices=1)
+    cost = tf.reduce_mean(tf.square(y - readout_action))
+    train_step = tf.train.AdamOptimizer(1e-6).minimize(cost)
+
+    # store the previous observations in replay memory
+    D = deque()
 
     # Get the first state (Frame) by doing nothing and preprocess the image to 80x80x4
     #############################################################################################

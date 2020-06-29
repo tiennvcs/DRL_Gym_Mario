@@ -38,3 +38,9 @@ COMPLEX_MOVEMENT = [
     ['down'],
     ['up'],
 ]
+
+ACTION_SPACES = {
+    'right': RIGHT_ONLY,
+    'simple': SIMPLE_MOVEMENT,
+    'complex': COMPLEX_MOVEMENT,
+}

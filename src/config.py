@@ -13,3 +13,18 @@ REPLAY_MEMORY = 50000 # number of previos transitions to remember            #
 BATCH  = 32 # size of mini-batch                                             #
 FRAME_PER_ACTION = 1                                                         #
 ##############################################################################
+
+parameters = {
+    'parameters_1':{
+        'GAME': 'super_mario_bros-2',
+        'NUM_ACTIONS': len(SIMPLE_MOVEMENT),
+        'GAMMA': 0.09,
+        'OBSERVE': 100000.,
+        'EXPLORE': 2000000.,
+        'INITIAL_EPSILON': 0.0001,
+        'FINAL_EPSILON': 0.0001,
+        'REPLAY_MEMORY': 50000,
+        'BATCH': 32,
+        'FRAME_PER_ACTION': 1
+    },
+}
