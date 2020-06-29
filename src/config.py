@@ -1,4 +1,4 @@
-from ..actions import RIGHT_ONLY, SIMPLE_MOVEMENT, COMPLEX_MOVEMENT
+from actions import RIGHT_ONLY, SIMPLE_MOVEMENT, COMPLEX_MOVEMENT
 
 # Trial 1: RIGHT_ONLY
 ##############################################################################

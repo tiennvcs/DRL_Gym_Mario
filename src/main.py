@@ -4,11 +4,8 @@ import gym
 from nes_py.wrappers import JoypadSpace
 from nes_py.app.play_human import play_human
 from nes_py.app.play_random import play_random
-from ..actions import RIGHT_ONLY, SIMPLE_MOVEMENT, COMPLEX_MOVEMENT
-
-# My added code
-from .play_dqn import play_dqn
-
+from actions import RIGHT_ONLY, SIMPLE_MOVEMENT, COMPLEX_MOVEMENT
+from play_dqn import play_dqn
 
 # a key mapping of action spaces to wrap with
 _ACTION_SPACES = {
@@ -20,7 +17,7 @@ _ACTION_SPACES = {
 
 def _get_args():
     """Parse command line arguments and return them."""
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description="Deep Q Lerning in Mario Bros Game")
     # add the argument for the Super Mario Bros environment to run
     parser.add_argument('--env', '-e',
         type=str,
@@ -33,6 +30,14 @@ def _get_args():
         default='human',
         choices=['human', 'random', 'dqn'],
         help='The execution mode for the emulation'
+    )
+
+    # add parameter selections
+    parser.add_argument('--parameter', 'p',
+        type=int,
+        default=0,
+        choices=[0, 1, 2, 3, 4, 5],
+        help='The parameter'
     )
     # add the argument for adjusting the action space
     parser.add_argument('--actionspace', '-a',
