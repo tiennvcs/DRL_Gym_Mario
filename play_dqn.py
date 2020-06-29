@@ -7,12 +7,12 @@ import cv2
 import sys
 import random
 import numpy as np
+import tensorflow as tf
 from collections import deque
 from config import *
-from deep_q_network import createNetwork
+from network_architecture import createNetwork
 from actions import ACTION_SPACES
-import tensorflow.compat.v1 as tf
-tf.disable_v2_behavior()
+
 
 
 def play_dqn(env, parameters_x):
