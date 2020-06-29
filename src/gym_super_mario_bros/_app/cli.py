@@ -30,14 +30,14 @@ def _get_args():
     # add the argument for the mode of execution as either human or random
     parser.add_argument('--mode', '-m',
         type=str,
-        default='human',
+        default='dqn',
         choices=['human', 'random', 'dqn'],
         help='The execution mode for the emulation'
     )
     # add the argument for adjusting the action space
     parser.add_argument('--actionspace', '-a',
         type=str,
-        default='simple',
+        default='complex',
         choices=['nes', 'right', 'simple', 'complex'],
         help='the action space wrapper to use'
     )
