@@ -74,9 +74,8 @@ def play_dqn(env, steps):
     epsilon = INITIAL_EPSILON
     t = 0
     done = True
-
+    
     while True:
-        
         if done:
             env.reset()
 
@@ -103,9 +102,7 @@ def play_dqn(env, steps):
 
         # Run the selected action and observe next state and reward
         new_state, reward, done, info = env.step(action)
-
-
-
+        
         new_state = cv2.cvtColor(cv2.resize(new_state, (80, 80)), cv2.COLOR_BGR2GRAY)
         new_state = np.reshape(new_state, (80, 80, 1))
         new_state = np.append(new_state, state[:, :, :3], axis=2)
