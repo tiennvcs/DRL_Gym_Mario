@@ -27,15 +27,12 @@ Instead play the game by hand, we apply one of the most powerful technique of De
   
   #### With Docker (*Only recommomend for training period*)**
   ```bash
-    $ sudo docker container run -it -v /directory/of/repository:/home--name drl_mario ubuntu:18.04
+    $ sudo docker container run -it -v /directory/of/repository:/home --name drl_mario tensorflow/tensorflow:1.15.2
     
-    $ apt-get update
+    $ apt-get -y update && apt-get -y libsm6 libxext6 libxrender-dev && pip install --upgrade pip
     
-    $ apt-get install python3-pip
-    
-    $ pip install --upgrade pip setuptools
-    
-    $ pip install -r requirements.txt
+    $ pip install gym_super_mario_bros && pip install opencv-python
+ 
   ```
  
  #### With virtual enviroment
