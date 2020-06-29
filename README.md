@@ -7,7 +7,7 @@ Instead play the game by hand, we apply one of the most powerful technique of De
 ## Description about project
 - Implement the Deep Q Network for Gym Sumper Mario Bros game.
 - <strike>Eperiment some Neuron network architectures appied for problem.</strike>
-- *The source code use Python 3.7.7, gym-super-mario-bros 7.3.2, Tensorflow 1.15.0, OpenCV 4.2.0.34.*
+- *The source code use Python 3.7.7, gym-super-mario-bros 7.3.2, Tensorflow 1.15.2, OpenCV 4.2.0.34.*
 
 ## To run projects
   ***Clone the repository to your local machine***
@@ -22,7 +22,7 @@ Instead play the game by hand, we apply one of the most powerful technique of De
     
     $ conda activate drl_mario_env
     
-    $ pip install -r requirements.txt
+    (drl_mario_env)$ pip install -r requirements.txt
   ```
   
   #### With Docker (*Only recommomend for training period*)**
