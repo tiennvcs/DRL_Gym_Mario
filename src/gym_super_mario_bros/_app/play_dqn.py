@@ -32,7 +32,7 @@ a_file = open("logs_" + GAME + "/readout.txt", 'w')
 h_file = open("logs_" + GAME + "/hidden.txt", 'w')
 
 
-def play_dqn(env, steps):
+def play_dqn(env):
     """
     Play the environment making uniformly random decisions.
 
@@ -61,10 +61,10 @@ def play_dqn(env, steps):
     # Saving and loading networks
     ############################################################################################
     saver = tf.train.Saver()                                                                   #
-    sess.run(tf.initialize_all_variables())                                                    # 
+    sess.run(tf.initialize_all_variables())                                                    #
     checkpoint = tf.train.get_checkpoint_state("saved_networks")                               #
     if checkpoint and checkpoint.model_checkpoint_path:                                        #
-        saver.restore(sess, checkpoint.model_checkpoint_path)                                  # 
+        saver.restore(sess, checkpoint.model_checkpoint_path)                                  #
         print("Successfully  loaded: ", checkpoint.model_checkpoint_path)                      #
     else:                                                                                      #
         print("Could not find old network weights")                                            #
@@ -74,7 +74,7 @@ def play_dqn(env, steps):
     epsilon = INITIAL_EPSILON
     t = 0
     done = True
-    
+
     while True:
         if done:
             env.reset()
@@ -102,7 +102,7 @@ def play_dqn(env, steps):
 
         # Run the selected action and observe next state and reward
         new_state, reward, done, info = env.step(action)
-        
+
         new_state = cv2.cvtColor(cv2.resize(new_state, (80, 80)), cv2.COLOR_BGR2GRAY)
         new_state = np.reshape(new_state, (80, 80, 1))
         new_state = np.append(new_state, state[:, :, :3], axis=2)
@@ -115,13 +115,13 @@ def play_dqn(env, steps):
         if t >= OBSERVE:
             # sample a minibatch to train
             minibatch = random.sample(D, BATCH)
-            
+
             # get the batch variables
             state = [d[0] for d in minibatch]
             action_onehot_batch = [d[1] for d in minibatch]
             reward_bacth = [d[2] for d in minibatch]
             new_state_batch = [d[3] for d in minibatch]
-	    
+
             y_batch = []
             readout_j1_batch = readout.eval(feed_dict = {s : new_state_batch})
             for i in range(0, len(minibatch)):
