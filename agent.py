@@ -110,6 +110,7 @@ def train_dqn(env, hparameters_x, readout, s, sess, train_step, saver, h_fc1, re
             # get the batch variables
             state = [d[0] for d in minibatch]
             action_onehot_batch = [d[1] for d in minibatch]
+            B
             reward_bacth = [d[2] for d in minibatch]
             new_state_batch = [d[3] for d in minibatch]
 
