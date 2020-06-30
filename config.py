@@ -40,6 +40,45 @@ parameters = {
         'BATCH': 64,
         'FRAME_PER_ACTION': 1
     },
+
+    'parameters_4':{
+        'GAME': 'super_mario_bros-2',
+        'NUM_ACTIONS': len(SIMPLE_MOVEMENT),
+        'GAMMA': 0.99,
+        'OBSERVE': 100000.,
+        'EXPLORE': 2000000.,
+        'INITIAL_EPSILON': 0.01,
+        'FINAL_EPSILON': 0.0001,
+        'REPLAY_MEMORY': 50000,
+        'BATCH': 64,
+        'FRAME_PER_ACTION': 1
+    },
+
+    'parameters_5':{
+        'GAME': 'super_mario_bros-2',
+        'NUM_ACTIONS': len(SIMPLE_MOVEMENT),
+        'GAMMA': 0.99,
+        'OBSERVE': 100000.,
+        'EXPLORE': 2000000.,
+        'INITIAL_EPSILON': 0.1,
+        'FINAL_EPSILON': 0.0001,
+        'REPLAY_MEMORY': 50000,
+        'BATCH': 64,
+        'FRAME_PER_ACTION': 1
+    },
+
+    'parameters_6':{
+        'GAME': 'super_mario_bros-2',
+        'NUM_ACTIONS': len(SIMPLE_MOVEMENT),
+        'GAMMA': 0.99,
+        'OBSERVE': 100000.,
+        'EXPLORE': 2000000.,
+        'INITIAL_EPSILON': 0.9,
+        'FINAL_EPSILON': 0.0001,
+        'REPLAY_MEMORY': 50000,
+        'BATCH': 64,
+        'FRAME_PER_ACTION': 1
+    },
 }
 
 
