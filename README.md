@@ -51,7 +51,9 @@ Instead play the game by hand, we apply one of the most powerful technique of De
  
   **Training an agent to play Mario game with default Hyper-parameters**.
   ```bash
-    python main.py -m train
+    python main.py -m train -p 1 -r 0          # Training agent with the 1'st hyper-parameter and not render the graphic.
+    
+    
   ```
   **See the agent play the game with the model learnt from the training**:
   ```bash
