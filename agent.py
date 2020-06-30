@@ -23,7 +23,6 @@ def train_dqn(env, hparameters_x, readout, s, sess, train_step, saver, h_fc1, re
     # Get the hyper-parameters
     #########################################################################
     GAME = hparameters_x['GAME']                                             #
-    A
     NUM_ACTIONS = hparameters_x['NUM_ACTIONS']                               #
     GAMMA = hparameters_x['GAMMA']                                           #
     OBSERVE = hparameters_x['OBSERVE']                                       #
