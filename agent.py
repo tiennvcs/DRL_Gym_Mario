@@ -16,7 +16,7 @@ from actions import ACTION_SPACES
 from utils import render_frame
 
 
-def train_dqn(env, hparameters_x, readout, s, sess, train_step, saver, h_fc1, render):
+def train_dqn(env, hparameters_x, readout, s, y, a, sess, train_step, saver, h_fc1, render):
     """Docstring
 
     """

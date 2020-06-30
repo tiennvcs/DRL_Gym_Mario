@@ -32,12 +32,12 @@ def main():
     train_step = tf.train.AdamOptimizer(1e-6).minimize(cost)                        #
     #################################################################################
 
-    saver = tf.train.Saver()                                                                   
-    sess.run(tf.initialize_all_variables())                                                    
+    saver = tf.train.Saver()
+    sess.run(tf.initialize_all_variables())
 
     if args.mode == 'train':
         # Get the paramters and confirm
-        
+
         print_info_hyperparameters(parameters_x)
 
         ans = "Bao Tien Tri"
@@ -49,12 +49,12 @@ def main():
         if ans.upper() == 'N' or ans.upper() == 'NO':
             print("Thank you and try again!")
             exit(0)
-        train_dqn(env, parameters_x, readout=readout, s=s, saver=saver, sess=sess, train_step=train_step, h_fc1=h_fc1, render=args.render)
+        train_dqn(env, parameters_x, readout=readout, s=s, y=y, a=a, saver=saver, sess=sess, train_step=train_step, h_fc1=h_fc1, render=args.render)
 
     elif args.mode == 'play':
-        checkpoint = tf.train.get_checkpoint_state("saved_networks")                           
-        if checkpoint and checkpoint.model_checkpoint_path:                                        
-            saver.restore(sess, checkpoint.model_checkpoint_path)                                  
+        checkpoint = tf.train.get_checkpoint_state("saved_networks")
+        if checkpoint and checkpoint.model_checkpoint_path:
+            saver.restore(sess, checkpoint.model_checkpoint_path)
             print("Successfully  loaded: ", checkpoint.model_checkpoint_path)
             play_dqn(env, parameters_x, readout=readout, s=s)
             print("Thank you for your time !!! Let rate my agent :) !")
