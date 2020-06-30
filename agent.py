@@ -23,6 +23,7 @@ def train_dqn(env, hparameters_x, readout, s, sess, train_step, saver, h_fc1, re
     # Get the hyper-parameters
     #########################################################################
     GAME = hparameters_x['GAME']                                             #
+    A
     NUM_ACTIONS = hparameters_x['NUM_ACTIONS']                               #
     GAMMA = hparameters_x['GAMMA']                                           #
     OBSERVE = hparameters_x['OBSERVE']                                       #
@@ -67,7 +68,7 @@ def train_dqn(env, hparameters_x, readout, s, sess, train_step, saver, h_fc1, re
     while True:
         if render:
             env.render()
-            
+
         if done:
             env.reset()
 
@@ -110,7 +111,6 @@ def train_dqn(env, hparameters_x, readout, s, sess, train_step, saver, h_fc1, re
             # get the batch variables
             state = [d[0] for d in minibatch]
             action_onehot_batch = [d[1] for d in minibatch]
-            B
             reward_bacth = [d[2] for d in minibatch]
             new_state_batch = [d[3] for d in minibatch]
 
@@ -158,7 +158,7 @@ def train_dqn(env, hparameters_x, readout, s, sess, train_step, saver, h_fc1, re
             a_file.write(",".join([str(x) for x in readout_t]) + '\n')
             h_file.write(",".join([str(x) for x in h_fc1.eval(feed_dict={s:[state]})[0]]) + '\n')
             cv2.imwrite("logs_tetris/frame" + str(t) + ".png", gray_new_state)
-        
+
 
     env.close()
 
@@ -178,7 +178,7 @@ def play_dqn(env, hparameters_x, readout, s):
     state = np.stack((observation, observation, observation, observation), axis=2)              #
     #############################################################################################
     origin_new_state = state
-    
+
     t = 0
     done = True
 
@@ -187,7 +187,7 @@ def play_dqn(env, hparameters_x, readout, s):
         env.render()
         #render_frame(frame=origin_new_state, ratio=2)
         #time.sleep(1)
-        
+
         if done:
             env.reset()
 
