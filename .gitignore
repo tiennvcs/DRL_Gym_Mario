@@ -2,4 +2,5 @@ __pycache__/*
 *.ini
 .vscode/*
 logs_tetris/*
-logs_super_mario_bros-2/* 
+logs_super_mario_bros-2/*
+Demo/

@@ -1,0 +1,6 @@
+model_checkpoint_path: "super_mario_bros-2-dqn-12850000"
+all_model_checkpoint_paths: "super_mario_bros-2-dqn-12810000"
+all_model_checkpoint_paths: "super_mario_bros-2-dqn-12820000"
+all_model_checkpoint_paths: "super_mario_bros-2-dqn-12830000"
+all_model_checkpoint_paths: "super_mario_bros-2-dqn-12840000"
+all_model_checkpoint_paths: "super_mario_bros-2-dqn-12850000"

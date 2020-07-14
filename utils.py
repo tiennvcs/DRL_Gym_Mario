@@ -23,7 +23,7 @@ def get_args():
     parser.add_argument('--parameter', '-p',
         type=int,
         default=1,
-        choices=[1, 2, 3, 4, 5],
+        choices=[1, 2, 3, 4, 5, 6],
         help='The parameter to train agent'
     )
     # add the argument for adjusting the action space
