@@ -83,3 +83,8 @@ parameters = {
 
 
 STANDARD_SIZE = (240, 256)
+
+MARIO_ENCODING = {
+    'mode':{'small': 0, 'big': 1, 'fire': 2},
+
+}

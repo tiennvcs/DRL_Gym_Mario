@@ -24,7 +24,7 @@ def get_args():
     parser.add_argument('-al', '--algorithm',
         type=str,
         default='dqn',
-        choices = ["q_learning", "dqn"],
+        choices = ["q_learning", "dqn", ],
         help="The alogirthm to train model")
 
     # add parameter selections
