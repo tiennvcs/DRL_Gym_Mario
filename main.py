@@ -38,18 +38,22 @@ def main():
     if args.mode == 'train':
         # Get the paramters and confirm
 
-        print_info_hyperparameters(parameters_x)
+        if args.algorithm == 'q_learning':
+            pass
 
-        ans = "Bao Tien Tri"
+        else:
+            print_info_hyperparameters(parameters_x)
 
-        # Comment these lines when training on server
-        while not (ans.upper() == 'Y' or ans.upper() == 'YES' or ans.upper() == 'NO' or ans.upper() == 'N'):
-            ans = input("\n ------------>  Do you want to continue with the above hyper-parameters ? (Y/N)")
+            ans = "Bao Tien Tri"
 
-        if ans.upper() == 'N' or ans.upper() == 'NO':
-            print("Thank you and try again!")
-            exit(0)
-        train_dqn(env, parameters_x, readout=readout, s=s, y=y, a=a, saver=saver, sess=sess, train_step=train_step, h_fc1=h_fc1, render=args.render)
+            # Comment these lines when training on server
+            while not (ans.upper() == 'Y' or ans.upper() == 'YES' or ans.upper() == 'NO' or ans.upper() == 'N'):
+                ans = input("\n ------------>  Do you want to continue with the above hyper-parameters ? (Y/N)")
+
+            if ans.upper() == 'N' or ans.upper() == 'NO':
+                print("Thank you and try again!")
+                exit(0)
+            train_dqn(env, parameters_x, readout=readout, s=s, y=y, a=a, saver=saver, sess=sess, train_step=train_step, h_fc1=h_fc1, render=args.render)
 
     elif args.mode == 'play':
         checkpoint = tf.train.get_checkpoint_state("saved_networks")

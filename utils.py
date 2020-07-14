@@ -12,12 +12,20 @@ def get_args():
         help='The name of the environment to play'
     )
 
+    # add mode
     parser.add_argument('--mode', '-m',
         type=str,
         default='train',
         choices=['train', 'play'],
         help='Give agent play game or Train agent'
     )
+
+    # add algorithm to train
+    parser.add_argument('-al', '--algorithm',
+        type=str,
+        default='dqn',
+        choices = ["q_learning", "dqn"],
+        help="The alogirthm to train model")
 
     # add parameter selections
     parser.add_argument('--parameter', '-p',
