@@ -175,23 +175,28 @@ class Agent():
             action = self.env.action_space.sample()
 
             observation, done, reward, info = self.env.step(action)
+
+            print(info['stage'])
+            input()
             # Devide the windows to 22x22 grids
             observation = observation.astype(np.uint8)
 
+
             for i in range(1, 12):
                 observation = cv2.line(observation, (0, i * size_grid),
-                                    (256, i * size_grid), (0, 0, 255), 1)
+                                    (256, i * size_grid), (0, 0, 0), 1)
 
             for i in range(1, 12):
                 observation = cv2.line(observation, (10 + i * size_grid, 0),
-                                    (10 + i * size_grid, 256), (0, 0, 255), 1)
-
+                                    (10 + i * size_grid, 256), (0, 0, 0), 1)
 
             start_point = (info['x_pos'],  256 - info['y_pos'] + 10)
             end_point = (info['x_pos']+16, 256 - info['y_pos'] + 40)
             observation = cv2.rectangle(observation,
                                         start_point, end_point,
-                                        (0, 255, 0), 1)
+                                        (0, 255, 0), 2)
+
+
             cv2.imshow('Draw', observation)
             if cv2.waitKey(0) == 27:
                  break
