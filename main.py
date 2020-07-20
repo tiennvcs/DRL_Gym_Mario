@@ -21,19 +21,19 @@ def main():
 
     # Training/play the agent with the hyper-parameters
     #################################################################################
-    sess = tf.InteractiveSession()                                                  #
+    sess = tf.compat.v1.InteractiveSession()                                                  #
     # Initialize a neural network                                                   #
     s, readout, h_fc1 = createNetwork(parameters_x)                                 #                                                                      #
     # define the cost function                                                      #
-    a = tf.placeholder("float", [None, len(ACTION_SPACES[args.actionspace])])       #
-    y = tf.placeholder("float", [None])                                             #
-    readout_action = tf.reduce_sum(tf.multiply(readout, a), reduction_indices=1)    #
-    cost = tf.reduce_mean(tf.square(y - readout_action))                            #
-    train_step = tf.train.AdamOptimizer(1e-6).minimize(cost)                        #
+    a = tf.compat.v1.placeholder("float", [None, len(ACTION_SPACES[args.actionspace])])       #
+    y = tf.compat.v1.placeholder("float", [None])                                             #
+    readout_action = tf.reduce_sum(input_tensor=tf.multiply(readout, a), axis=1)    #
+    cost = tf.reduce_mean(input_tensor=tf.square(y - readout_action))                            #
+    train_step = tf.compat.v1.train.AdamOptimizer(1e-6).minimize(cost)                        #
     #################################################################################
 
-    saver = tf.train.Saver()
-    sess.run(tf.initialize_all_variables())
+    saver = tf.compat.v1.train.Saver()
+    sess.run(tf.compat.v1.initialize_all_variables())
 
     if args.mode == 'train':
         # Get the paramters and confirm
