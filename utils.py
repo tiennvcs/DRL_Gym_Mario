@@ -14,9 +14,12 @@ def get_args():
         default=10,
         help='The numbers replay models '
     )
-    
+    parser.add_argument('--log', '-l',
+        type=int, default=0,
+        help='Print the logs of training/playing')
+    parser.add_argument('--render', '-r',
+        type=int, default=0,
+        help='Render the training/playing progress.')
 
-    
     # parse arguments and return them
     return parser.parse_args()
-

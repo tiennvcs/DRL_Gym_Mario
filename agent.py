@@ -4,7 +4,7 @@ import numpy as np
 from collections import deque
 import tensorflow as tf
 from matplotlib import pyplot as plt
-
+tf.compat.v1.disable_eager_execution()
 
 class DQNAgent:
     """ DQN agent """
@@ -149,7 +149,7 @@ class DQNAgent:
         input = graph.get_tensor_by_name('input:0')
         output = graph.get_tensor_by_name('online/output/BiasAdd:0')
         # Replay RL agent
-        
+
         state = env.reset()
         total_reward = 0
         with tf.compat.v1.Session() as sess:

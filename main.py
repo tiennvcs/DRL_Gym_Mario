@@ -3,94 +3,103 @@ import numpy as np
 #from nes_py.wrappers import BinarySpaceToDiscreteSpaceEnv
 from nes_py.wrappers import JoypadSpace
 import gym_super_mario_bros
-from gym_super_mario_bros.actions import RIGHT_ONLY
+from gym_super_mario_bros.actions import SIMPLE_MOVEMENT
 from agent import DQNAgent
 from wrappers import wrapper
 from utils import get_args
 
 
-# Take argument
-arg = get_args()
+def main(args):
 
-# Build env (first level, right only)
-env = gym_super_mario_bros.make(arg.env)
-env = JoypadSpace(env, RIGHT_ONLY)
-env = wrapper(env)
-# Parameters
-states = (84, 84, 4)
-actions = env.action_space.n
+    # Build env (first level, right only)
+    env = gym_super_mario_bros.make(args.env)
+    env = JoypadSpace(env, SIMPLE_MOVEMENT)
+    env = wrapper(env)
+    # Parameters
+    states = (84, 84, 4)
+    actions = env.action_space.n
 
-# Agent
-agent = DQNAgent(states=states, actions=actions, max_memory=100000, double_q=True)
+    # Agent
+    agent = DQNAgent(states=states, actions=actions, max_memory=100000, double_q=True)
 
-# Episodes
-# episodes = 100001
-episodes = 101
-rewards = []
+    # Episodes
+    # episodes = 100001
+    episodes = 101
+    rewards = []
 
-# Timing
-start = time.time()
-step = 0
+    # Timing
+    start = time.time()
+    step = 0
 
-# Main loop
-for e in range(episodes):
+    # Main loop
+    for e in range(episodes):
 
-    # Reset env
-    state = env.reset()
+        # Reset env
+        state = env.reset()
 
-    # Reward
-    total_reward = 0
-    iter = 0
+        # Reward
+        total_reward = 0
+        iter = 0
 
-    # Play
-    while True:
-        
+        # Play
+        while True:
 
-        # Show env
-        env.render()
 
-        # Run agent
-        action = agent.run(state=state)
+            # Show env
+            if args.render:
+                env.render()
 
-        # Perform action
-        next_state, reward, done, info = env.step(action=action)
+            # Run agent
+            action = agent.run(state=state)
 
-        # Remember
-        agent.add(experience=(state, next_state, action, reward, done))
-        print('Training:  action-{a} reward-{r} done-{d} info-{i}'.format(s = state, a = action, r = reward, d = done,i = info))
+            # Perform action
+            next_state, reward, done, info = env.step(action=action)
 
-        # Replay
-        agent.learn()
+            # Remember
+            agent.add(experience=(state, next_state, action, reward, done))
 
-        # Total reward
-        total_reward += reward
+            if args.log:
+                if iter % 100 == 0:
+                    print('Training: step-{i} action-{a} reward-{r} done-{d}'.format(i=iter, s = state,
+                                                a = action, r = reward, d = done,))
 
-        # Update state
-        state = next_state
+            # Replay
+            agent.learn()
 
-        # Increment
-        iter += 1
+            # Total reward
+            total_reward += reward
 
-        # If done break loop
-        if done or info['flag_get']:
-            break
+            # Update state
+            state = next_state
 
-    # Rewards
-    rewards.append(total_reward / iter)
+            # Increment
+            iter += 1
 
-    # Print
-    if e % 100 == 0:
-        print('Episode {e} - '
-              'Frame {f} - '
-              'Frames/sec {fs} - '
-              'Epsilon {eps} - '
-              'Mean Reward {r}'.format(e=e,
-                                       f=agent.step,
-                                       fs=np.round((agent.step - step) / (time.time() - start)),
-                                       eps=np.round(agent.eps, 4),
-                                       r=np.mean(rewards[-100:])))
+            # If done break loop
+            if done or info['flag_get']:
+                break
+
+        # Rewards
+        rewards.append(total_reward / iter)
+
+        # Print the training process for each episole
+        if e % 100 == 0:
+            print('Episode {e} - '
+                  'Frame {f} - '
+                  'Frames/sec {fs} - '
+                  'Epsilon {eps} - '
+                  'Mean Reward {r}'.format(e=e,
+                                           f=agent.step,
+                                           fs=np.round((agent.step - step) / (time.time() - start)),
+                                           eps=np.round(agent.eps, 4),
+                                           r=np.mean(rewards[-100:])))
+
         start = time.time()
         step = agent.step
 
-# Save rewards
-np.save('rewards.npy', rewards)
+    # Save rewards
+    np.save('rewards.npy', rewards)
+
+if __name__ == '__main__':
+    args = get_args()
+    main(args)

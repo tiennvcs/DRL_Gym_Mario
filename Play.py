@@ -8,35 +8,44 @@ from agent import DQNAgent
 from wrappers import wrapper
 from utils import get_args
 
-# Take argument
-arg = get_args()
 
-# Build env (first level, right only)
-env = gym_super_mario_bros.make(arg.env)
-env = JoypadSpace(env, RIGHT_ONLY)
-env = wrapper(env)
-# Parameters
-states = (84, 84, 4)
-actions = env.action_space.n
+def main(args):
+    # Take argument
 
-# Pham xuan
-# Agent
-agent = DQNAgent(states=states, actions=actions, max_memory=100000, double_q=True)
 
-# Episodes
-eisodes = 101
-rewards = []
+    # Build env (first level, right only)
+    env = gym_super_mario_bros.make(arg.env)
+    env = JoypadSpace(env, RIGHT_ONLY)
+    env = wrapper(env)
+    # Parameters
+    states = (84, 84, 4)
+    actions = env.action_space.n
 
-# Timing
-start = time.time()
-step = 0
+    # Pham xuan
+    # Agent
+    agent = DQNAgent(states=states, actions=actions, max_memory=100000, double_q=True)
 
-# model path 
-model_path = 'models'
+    ## BUG: Declare but not use ?
 
-# Main loop
-#env.reset()
-agent.replay(env,model_path,arg.n_replay,plot = True)
-#env.reset()
+    # Episodes
+    episodes = 101   ## <---
+    rewards = []     ## <---
 
-print("Done")
+    # Timing
+    start = time.time()   ## <---
+    step = 0              ## <---
+
+    # model path
+    model_path = 'models'
+
+    # Main loop
+
+    agent.replay(env, model_path,args.n_replay, plot = True)
+
+
+    print("Done")
+
+
+if __name__ == '__main__':
+    args = get_args()
+    main(args)
