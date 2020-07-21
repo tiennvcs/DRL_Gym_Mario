@@ -11,11 +11,11 @@ class DQNAgent:
     def __init__(self, states, actions, max_memory, double_q):
         self.states = states
         self.actions = actions
-        self.session = tf.Session()
+        self.session = tf.compat.v1.Session()
         self.build_model()
-        self.saver = tf.train.Saver(max_to_keep=10)
-        self.session.run(tf.global_variables_initializer())
-        self.saver = tf.train.Saver()
+        self.saver = tf.compat.v1.train.Saver(max_to_keep=10)
+        self.session.run(tf.compat.v1.global_variables_initializer())
+        self.saver = tf.compat.v1.train.Saver()
         self.memory = deque(maxlen=max_memory)
         self.eps = 1
         self.eps_decay = 0.99999975
@@ -32,43 +32,43 @@ class DQNAgent:
 
     def build_model(self):
         """ Model builder function """
-        self.input = tf.placeholder(dtype=tf.float32, shape=(None, ) + self.states, name='input')
-        self.q_true = tf.placeholder(dtype=tf.float32, shape=[None], name='labels')
-        self.a_true = tf.placeholder(dtype=tf.int32, shape=[None], name='actions')
-        self.reward = tf.placeholder(dtype=tf.float32, shape=[], name='reward')
-        self.input_float = tf.to_float(self.input) / 255.
+        self.input = tf.compat.v1.placeholder(dtype=tf.float32, shape=(None, ) + self.states, name='input')
+        self.q_true = tf.compat.v1.placeholder(dtype=tf.float32, shape=[None], name='labels')
+        self.a_true = tf.compat.v1.placeholder(dtype=tf.int32, shape=[None], name='actions')
+        self.reward = tf.compat.v1.placeholder(dtype=tf.float32, shape=[], name='reward')
+        self.input_float = tf.cast(self.input, dtype=tf.float32) / 255.
         # Online network
-        with tf.variable_scope('online'):
-            self.conv_1 = tf.layers.conv2d(inputs=self.input_float, filters=32, kernel_size=8, strides=4, activation=tf.nn.relu)
-            self.conv_2 = tf.layers.conv2d(inputs=self.conv_1, filters=64, kernel_size=4, strides=2, activation=tf.nn.relu)
-            self.conv_3 = tf.layers.conv2d(inputs=self.conv_2, filters=64, kernel_size=3, strides=1, activation=tf.nn.relu)
-            self.flatten = tf.layers.flatten(inputs=self.conv_3)
-            self.dense = tf.layers.dense(inputs=self.flatten, units=512, activation=tf.nn.relu)
-            self.output = tf.layers.dense(inputs=self.dense, units=self.actions, name='output')
+        with tf.compat.v1.variable_scope('online'):
+            self.conv_1 = tf.compat.v1.layers.conv2d(inputs=self.input_float, filters=32, kernel_size=8, strides=4, activation=tf.nn.relu)
+            self.conv_2 = tf.compat.v1.layers.conv2d(inputs=self.conv_1, filters=64, kernel_size=4, strides=2, activation=tf.nn.relu)
+            self.conv_3 = tf.compat.v1.layers.conv2d(inputs=self.conv_2, filters=64, kernel_size=3, strides=1, activation=tf.nn.relu)
+            self.flatten = tf.compat.v1.layers.flatten(inputs=self.conv_3)
+            self.dense = tf.compat.v1.layers.dense(inputs=self.flatten, units=512, activation=tf.nn.relu)
+            self.output = tf.compat.v1.layers.dense(inputs=self.dense, units=self.actions, name='output')
         # Target network
-        with tf.variable_scope('target'):
-            self.conv_1_target = tf.layers.conv2d(inputs=self.input_float, filters=32, kernel_size=8, strides=4, activation=tf.nn.relu)
-            self.conv_2_target = tf.layers.conv2d(inputs=self.conv_1_target, filters=64, kernel_size=4, strides=2, activation=tf.nn.relu)
-            self.conv_3_target = tf.layers.conv2d(inputs=self.conv_2_target, filters=64, kernel_size=3, strides=1, activation=tf.nn.relu)
-            self.flatten_target = tf.layers.flatten(inputs=self.conv_3_target)
-            self.dense_target = tf.layers.dense(inputs=self.flatten_target, units=512, activation=tf.nn.relu)
-            self.output_target = tf.stop_gradient(tf.layers.dense(inputs=self.dense_target, units=self.actions, name='output_target'))
+        with tf.compat.v1.variable_scope('target'):
+            self.conv_1_target = tf.compat.v1.layers.conv2d(inputs=self.input_float, filters=32, kernel_size=8, strides=4, activation=tf.nn.relu)
+            self.conv_2_target = tf.compat.v1.layers.conv2d(inputs=self.conv_1_target, filters=64, kernel_size=4, strides=2, activation=tf.nn.relu)
+            self.conv_3_target = tf.compat.v1.layers.conv2d(inputs=self.conv_2_target, filters=64, kernel_size=3, strides=1, activation=tf.nn.relu)
+            self.flatten_target = tf.compat.v1.layers.flatten(inputs=self.conv_3_target)
+            self.dense_target = tf.compat.v1.layers.dense(inputs=self.flatten_target, units=512, activation=tf.nn.relu)
+            self.output_target = tf.stop_gradient(tf.compat.v1.layers.dense(inputs=self.dense_target, units=self.actions, name='output_target'))
         # Optimizer
         self.action = tf.argmax(input=self.output, axis=1)
-        self.q_pred = tf.gather_nd(params=self.output, indices=tf.stack([tf.range(tf.shape(self.a_true)[0]), self.a_true], axis=1))
-        self.loss = tf.losses.huber_loss(labels=self.q_true, predictions=self.q_pred)
-        self.train = tf.train.AdamOptimizer(learning_rate=0.00025).minimize(self.loss)
+        self.q_pred = tf.gather_nd(params=self.output, indices=tf.stack([tf.range(tf.shape(input=self.a_true)[0]), self.a_true], axis=1))
+        self.loss = tf.compat.v1.losses.huber_loss(labels=self.q_true, predictions=self.q_pred)
+        self.train = tf.compat.v1.train.AdamOptimizer(learning_rate=0.00025).minimize(self.loss)
         # Summaries
-        self.summaries = tf.summary.merge([
-            tf.summary.scalar('reward', self.reward),
-            tf.summary.scalar('loss', self.loss),
-            tf.summary.scalar('max_q', tf.reduce_max(self.output))
+        self.summaries = tf.compat.v1.summary.merge([
+            tf.compat.v1.summary.scalar('reward', self.reward),
+            tf.compat.v1.summary.scalar('loss', self.loss),
+            tf.compat.v1.summary.scalar('max_q', tf.reduce_max(input_tensor=self.output))
         ])
-        self.writer = tf.summary.FileWriter(logdir='./logs', graph=self.session.graph)
+        self.writer = tf.compat.v1.summary.FileWriter(logdir='./logs', graph=self.session.graph)
 
     def copy_model(self):
         """ Copy weights to target network """
-        self.session.run([tf.assign(new, old) for (new, old) in zip(tf.trainable_variables('target'), tf.trainable_variables('online'))])
+        self.session.run([tf.compat.v1.assign(new, old) for (new, old) in zip(tf.compat.v1.trainable_variables('target'), tf.compat.v1.trainable_variables('online'))])
 
     def save_model(self):
         """ Saves current model to disk """
@@ -144,15 +144,15 @@ class DQNAgent:
         """ Model replay """
         ckpt = tf.train.latest_checkpoint(model_path)
         #print('/n-----------CKPT---------- {c} /n'.format(c=ckpt))
-        saver = tf.train.import_meta_graph(ckpt + '.meta')
-        graph = tf.get_default_graph()
+        saver = tf.compat.v1.train.import_meta_graph(ckpt + '.meta')
+        graph = tf.compat.v1.get_default_graph()
         input = graph.get_tensor_by_name('input:0')
         output = graph.get_tensor_by_name('online/output/BiasAdd:0')
         # Replay RL agent
         
         state = env.reset()
         total_reward = 0
-        with tf.Session() as sess:
+        with tf.compat.v1.Session() as sess:
             saver.restore(sess, ckpt)
             for _ in range(n_replay):
                 step = 0
