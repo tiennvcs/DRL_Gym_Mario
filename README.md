@@ -1,4 +1,4 @@
-# Deep Reinforcement Learning in Super Mario Bros
+# Guide Mario playing in 2D environment using Q-learning
 ----
 
 Super Mario Bros game is the classical video game and we play game by interact with the physical buttons.
@@ -60,10 +60,6 @@ Instead play the game by hand, we apply one of the most powerful technique of De
     python main.py -m play
   ```
   
-  
-## Experientials
-- We train the agent with default hyper-parameters:
-    + 
  
 
 ## References:
