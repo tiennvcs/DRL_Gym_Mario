@@ -5,7 +5,7 @@ Apply DRL to design an algorithm that can teach agents to automatically play con
 ## Usages
   **Training an agent to play Mario game with default Hyper-parameters**.
   ```bash
-    python main.py -m train -p 1 -r 0          # Training agent with the 1'st hyper-parameter and not render the graphic.
+    python main.py -m train -p 1 -r 0  # Training agent with the 1'st hyper-parameter and not render the graphic.
     
     
   ```
@@ -48,10 +48,6 @@ Apply DRL to design an algorithm that can teach agents to automatically play con
   (env) $ pip install -r requirements.txt
  ```
  
-
-  
- 
-
-## References:
+## References
 - [gym-super-mario-bros](https://github.com/Kautenja/gym-super-mario-bros)
 - [DeepLearningFlappyBird](https://github.com/tiennvuit/DeepLearningFlappyBird)
